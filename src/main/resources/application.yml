@@ -5,3 +5,14 @@ netty:
   default:
     allocator:
       max-order: 3
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:18543/pgdb
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+
+liquibase:
+  datasources:
+    default:
+      change-log: classpath:db/liquibase-changelog.xml
