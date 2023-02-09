@@ -16,7 +16,14 @@ dependencies {
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation("io.micronaut.liquibase:micronaut-liquibase")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.micronaut.sql:micronaut-jdbi")
     implementation("jakarta.annotation:jakarta.annotation-api")
+    implementation("org.jdbi:jdbi3-sqlobject") {
+        exclude group:'com.github.ben-manes.caffeine', module:'caffeine'
+    }
+    implementation("org.jdbi:jdbi3-postgres"){
+        exclude group:'com.github.ben-manes.caffeine', module:'caffeine'
+    }
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.postgresql:postgresql")
     implementation("io.micronaut:micronaut-validation")
