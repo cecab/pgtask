@@ -1,6 +1,9 @@
 micronaut:
   application:
     name: pgtask
+  caches:
+    user-cache:
+      expire-after-write: P1D
 netty:
   default:
     allocator:
