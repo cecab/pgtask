@@ -9,6 +9,7 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public interface QuestionDao {
     @SqlQuery("SELECT * from question")
@@ -19,6 +20,13 @@ public interface QuestionDao {
 
     @SqlQuery("SELECT * from question where :tag = ANY(tags)")
     List<QuestionDB> findByTag(@Bind("tag") String tag);
+
+    default List<QuestionDB> findByTags(List<String> tags) {
+        return tags.stream()
+                .flatMap((String tag) -> findByTag(tag).stream())
+                .distinct()
+                .collect(Collectors.toList());
+    }
 
     @SqlUpdate("INSERT INTO question(title,tags,is_answered,view_count,answer_count,creation_date,user_id) " +
             "values(:title,:tags, :is_answered, :view_count, :answer_count, :creation_date, :user_id)")

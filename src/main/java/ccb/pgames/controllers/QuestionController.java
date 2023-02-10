@@ -1,5 +1,6 @@
 package ccb.pgames.controllers;
 
+import ccb.pgames.controllers.model.QuestionAPI;
 import ccb.pgames.dao.QuestionDao;
 import ccb.pgames.dao.model.QuestionDB;
 import io.micronaut.http.annotation.*;
@@ -7,6 +8,7 @@ import org.jdbi.v3.core.Jdbi;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller("/questions")
 public class QuestionController {
@@ -16,21 +18,23 @@ public class QuestionController {
         this.jdbi = jdbi;
     }
 
-    //TODO: tag is a list of possible tags, not just one.
+    private List<QuestionAPI> asQuestionAPI(List<QuestionDB> questions) {
+        return questions.stream().map(QuestionAPI::new).collect(Collectors.toList());
+    }
+
     @Get
-    public List<QuestionDB> getByTag(@QueryValue(value = "tags", defaultValue = "") String tag) {
-        return jdbi.withExtension(QuestionDao.class, dao -> {
-            if (tag.isBlank()) {
+    public List<QuestionAPI> getByTag(@QueryValue(value = "tags", defaultValue = "") List<String> tags) {
+        return asQuestionAPI(jdbi.withExtension(QuestionDao.class, dao -> {
+            if (tags.size() == 1 && tags.get(0).isEmpty()) {
                 return dao.findAll();
             }
-            return dao.findByTag(tag);
-        });
+            return dao.findByTags(tags);
+        }));
     }
 
     @Get("/{questionId}")
-    public Optional<QuestionDB> getById(@PathVariable int questionId) {
-        //TODO: Reformat creation_date
-        return jdbi.withExtension(QuestionDao.class, dao -> dao.findById(questionId));
+    public Optional<QuestionAPI> getById(@PathVariable int questionId) {
+        return jdbi.withExtension(QuestionDao.class, dao -> dao.findById(questionId)).map(QuestionAPI::new);
     }
 
     @Delete("/{questionId}")
