@@ -39,7 +39,6 @@ public class QuestionController {
 
     @Delete("/{questionId}")
     public Optional<Integer> deleteById(@PathVariable int questionId) {
-        //TODO: Reformat creation_date
         int deleted = jdbi.withExtension(QuestionDao.class, dao -> dao.deleteById(questionId));
         if (deleted == 0) {
             return Optional.empty();

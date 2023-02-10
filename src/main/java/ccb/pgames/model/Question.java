@@ -1,7 +1,5 @@
 package ccb.pgames.model;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 public class Question {
@@ -72,11 +70,6 @@ public class Question {
 
     public void setCreation_date(long creation_date) {
         this.creation_date = creation_date;
-    }
-
-    public LocalDateTime valueOfCreation_date() {
-        //TODO: Better use the offset from systemDefault, this is hardcoding as UTC
-        return LocalDateTime.ofEpochSecond(this.creation_date, 0, ZoneOffset.ofTotalSeconds(0));
     }
 
     static class Owner {

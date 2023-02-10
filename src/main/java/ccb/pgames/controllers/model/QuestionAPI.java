@@ -1,10 +1,8 @@
 package ccb.pgames.controllers.model;
 
 import ccb.pgames.dao.model.QuestionDB;
+import ccb.pgames.helpers.FormatHelper;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class QuestionAPI {
@@ -87,8 +85,7 @@ public class QuestionAPI {
     }
 
     public void setCreationDateFromEphoc(long creation_date) {
-        var localDateTime = LocalDateTime.ofEpochSecond(creation_date, 0, ZoneOffset.UTC);
-        this.creation_date = localDateTime.format(DateTimeFormatter.ISO_DATE_TIME);
+        this.creation_date = FormatHelper.formatDate(creation_date);
     }
 
 
