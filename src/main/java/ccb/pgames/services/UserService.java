@@ -1,7 +1,7 @@
 package ccb.pgames.services;
 
 import ccb.pgames.backends.StackOverFlowClient;
-import ccb.pgames.controllers.model.UserAPI;
+import ccb.pgames.controllers.models.UserAPI;
 import ccb.pgames.helpers.FormatHelper;
 import io.micronaut.cache.annotation.Cacheable;
 import jakarta.inject.Named;

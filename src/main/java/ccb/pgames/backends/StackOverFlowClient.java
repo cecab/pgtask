@@ -1,6 +1,7 @@
 package ccb.pgames.backends;
 
-import ccb.pgames.model.Question;
+import ccb.pgames.backends.models.Question;
+import ccb.pgames.backends.models.User;
 import io.micronaut.http.client.annotation.Client;
 
 @Client("https://api.stackexchange.com/2.3")

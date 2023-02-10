@@ -1,6 +1,6 @@
-package ccb.pgames.controllers.model;
+package ccb.pgames.controllers.models;
 
-import ccb.pgames.dao.model.QuestionDB;
+import ccb.pgames.dao.models.QuestionDB;
 import ccb.pgames.helpers.FormatHelper;
 
 import java.util.List;

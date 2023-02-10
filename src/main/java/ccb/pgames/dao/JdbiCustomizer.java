@@ -1,6 +1,6 @@
 package ccb.pgames.dao;
 
-import ccb.pgames.dao.model.QuestionDB;
+import ccb.pgames.dao.models.QuestionDB;
 import jakarta.inject.Named;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;

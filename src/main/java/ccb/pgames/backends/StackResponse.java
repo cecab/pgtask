@@ -1,7 +1,5 @@
 package ccb.pgames.backends;
 
-import ccb.pgames.model.Question;
-
 import java.util.List;
 
 public class StackResponse<T> {

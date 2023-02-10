@@ -1,4 +1,4 @@
-package ccb.pgames.controllers.model;
+package ccb.pgames.controllers.models;
 
 public class UserAPI {
     private int user_id;

@@ -1,4 +1,4 @@
-package ccb.pgames.dao.model;
+package ccb.pgames.dao.models;
 
 import java.util.List;
 import java.util.Objects;

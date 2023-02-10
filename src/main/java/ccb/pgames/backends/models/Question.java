@@ -1,4 +1,4 @@
-package ccb.pgames.model;
+package ccb.pgames.backends.models;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package ccb.pgames.backends;
 
-import ccb.pgames.model.Question;
+import ccb.pgames.backends.models.Question;
+import ccb.pgames.backends.models.User;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.QueryValue;

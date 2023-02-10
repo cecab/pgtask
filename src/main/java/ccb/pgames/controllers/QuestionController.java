@@ -1,11 +1,12 @@
 package ccb.pgames.controllers;
 
-import ccb.pgames.controllers.model.QuestionAPI;
+import ccb.pgames.controllers.models.QuestionAPI;
 import ccb.pgames.dao.QuestionDao;
-import ccb.pgames.dao.model.QuestionDB;
+import ccb.pgames.dao.models.QuestionDB;
 import io.micronaut.http.annotation.*;
 import org.jdbi.v3.core.Jdbi;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,8 +24,9 @@ public class QuestionController {
     }
 
     @Get
-    public List<QuestionAPI> getByTag(@QueryValue(value = "tags", defaultValue = "") List<String> tags) {
+    public List<QuestionAPI> getByTag(@QueryValue(value = "tags", defaultValue = "") String strTags) {
         return asQuestionAPI(jdbi.withExtension(QuestionDao.class, dao -> {
+            var tags = Arrays.asList(strTags.split(","));
             if (tags.size() == 1 && tags.get(0).isEmpty()) {
                 return dao.findAll();
             }

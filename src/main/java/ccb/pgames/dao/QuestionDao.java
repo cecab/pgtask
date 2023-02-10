@@ -1,7 +1,7 @@
 package ccb.pgames.dao;
 
-import ccb.pgames.dao.model.QuestionDB;
-import ccb.pgames.model.Question;
+import ccb.pgames.dao.models.QuestionDB;
+import ccb.pgames.backends.models.Question;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;

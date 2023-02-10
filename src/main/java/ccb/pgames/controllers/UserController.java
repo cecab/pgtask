@@ -1,6 +1,6 @@
 package ccb.pgames.controllers;
 
-import ccb.pgames.controllers.model.UserAPI;
+import ccb.pgames.controllers.models.UserAPI;
 import ccb.pgames.services.UserService;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

@@ -1,4 +1,4 @@
-package ccb.pgames.backends;
+package ccb.pgames.backends.models;
 
 public class User {
     private int creation_date;
