@@ -3,11 +3,14 @@ package ccb.pgames.controllers;
 import ccb.pgames.controllers.models.QuestionAPI;
 import ccb.pgames.dao.QuestionDao;
 import ccb.pgames.dao.models.QuestionDB;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
 import org.jdbi.v3.core.Jdbi;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -40,11 +43,12 @@ public class QuestionController {
     }
 
     @Delete("/{questionId}")
-    public Optional<Integer> deleteById(@PathVariable int questionId) {
+    public HttpResponse<Map<String,String>> deleteById(@PathVariable int questionId) {
         int deleted = jdbi.withExtension(QuestionDao.class, dao -> dao.deleteById(questionId));
         if (deleted == 0) {
-            return Optional.empty();
+            return HttpResponse.status(HttpStatus.valueOf(202))
+                    .body(Map.of("error", "Question ID " + questionId + " was not removed"));
         }
-        return Optional.of(deleted);
+        return HttpResponse.status(HttpStatus.valueOf(204));
     }
 }
