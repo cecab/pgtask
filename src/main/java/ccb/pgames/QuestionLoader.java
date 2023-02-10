@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-@Named("fetcher")
+@Named("questions")
 @Singleton
 public class QuestionLoader {
-    private static Logger logger = LoggerFactory.getLogger(QuestionLoader.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuestionLoader.class);
     private final StackOverFlowClient fetcher;
     Jdbi jdbi;
 
@@ -34,11 +34,5 @@ public class QuestionLoader {
                         Integer::sum);
         assert inserted == dbQuestions.size();
         logger.info("Fetched and persisted questions from DB: {}", inserted);
-        System.out.println(getSize());
-    }
-
-    public int getSize() {
-        List<QuestionDB> questions = jdbi.withExtension(QuestionDao.class, QuestionDao::findAll);
-        return questions.size();
     }
 }

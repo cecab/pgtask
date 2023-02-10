@@ -1,12 +1,14 @@
 package ccb.pgames.backends;
 
-import ccb.pgames.backends.StackOverFlow;
-import ccb.pgames.model.FeaturedResponse;
+import ccb.pgames.model.Question;
 import io.micronaut.http.client.annotation.Client;
 
-//TODO: Move this value into a configuration file for the App
-@Client("https://api.stackexchange.com")
+@Client("https://api.stackexchange.com/2.3")
 public interface StackOverFlowClient extends StackOverFlow {
     @Override
-    FeaturedResponse latestQuestions(int page, int pagesize, String sort, String order, String site);
+    StackResponse<Question> latestQuestions(int page, int pagesize, String sort, String order, String site);
+
+    @Override
+    StackResponse<User> userDetails(int userId, String order, String sort, String site);
+
 }
