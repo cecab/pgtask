@@ -5,10 +5,16 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    ports:
-      - '18543:5432'
-    volumes: 
+    volumes:
       - db-pg:/var/lib/postgresql/data
+  pgtask:
+    build: .
+    depends_on:
+      - db
+    image: pgtask:latest
+    ports:
+      - '8080:8080'
+
 volumes:
   db-pg:
     driver: local

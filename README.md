@@ -2,13 +2,52 @@
 `pgtask` is a basic webservice built with [Micronaut](https://docs.micronaut.io/3.8.4/guide/index.html) to provide
 sample data from StackExchange API. 
 
-### Docker for Database
-The application comes with a docker compose file to make it easy to use Postgresql, you will need `docker` in 
-your environment to run (symbol `%` is the shell prompt):
+### Docker 
+The application comes with a docker compose file to make easier to try it, you will need `docker` in 
+your environment to run the following commands (symbol `%` is the shell prompt), and check the JAR file
+was already generated (see 'packaging' section):
 ```shell
-% docker compose up -d 
-[+] Running 1/1
- ⠿ Container pgtask-db-1  Started           
+% docker compose up pgtask
+[+] Running 0/1
+ ⠿ pgtask Warning                                                                                                                                                                                                1.8s
+[+] Building 1.6s (7/7) FINISHED                                                                                                                                                                                      
+ => [internal] load build definition from Dockerfile                                                                                                                                                             0.0s
+ => => transferring dockerfile: 177B                                                                                                                                                                             0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                0.0s
+ => => transferring context: 2B                                                                                                                                                                                  0.0s
+ => [internal] load metadata for docker.io/library/eclipse-temurin:11.0.12_7-jdk                                                                                                                                 1.2s
+ => CACHED [1/2] FROM docker.io/library/eclipse-temurin:11.0.12_7-jdk@sha256:08c608c75bd1874015929a2813680793fe55c8a611e70387ca1466ecd59c656f                                                                    0.0s
+ => [internal] load build context                                                                                                                                                                                0.2s
+ => => transferring context: 23.01MB                                                                                                                                                                             0.2s
+ => [2/2] COPY ./build/libs/pgtask-0.1-all.jar /app/                                                                                                                                                             0.1s
+ => exporting to image                                                                                                                                                                                           0.0s
+ => => exporting layers                                                                                                                                                                                          0.0s
+ => => writing image sha256:6970cce0d5415ba229acaf0b56ada021d83c31765f34fc1a8dba7f629db01765                                                                                                                     0.0s
+ => => naming to docker.io/library/pgtask:latest                                                                                                                                                                 0.0s
+
+[+] Running 3/3
+ ⠿ Network pgtask_default     Created                                                                                                                                                                            0.0s
+ ⠿ Container pgtask-db-1      Created                                                                                                                                                                            0.0s
+ ⠿ Container pgtask-pgtask-1  Created                                                                                                                                                                            0.0s
+Attaching to pgtask-pgtask-1
+pgtask-pgtask-1  |  __  __ _                                  _   
+pgtask-pgtask-1  | |  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_ 
+pgtask-pgtask-1  | | |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
+pgtask-pgtask-1  | | |  | | | (__| | | (_) | | | | (_| | |_| | |_ 
+pgtask-pgtask-1  | |_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
+pgtask-pgtask-1  |   Micronaut (v3.8.4)
+pgtask-pgtask-1  | 
+pgtask-pgtask-1  | 16:27:37.812 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+pgtask-pgtask-1  | 16:27:37.959 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+pgtask-pgtask-1  | 16:27:37.963 [main] INFO  i.m.l.AbstractLiquibaseMigration - Running migrations for database with qualifier [default]
+pgtask-pgtask-1  | Feb 10, 2023 4:27:38 PM liquibase.database
+pgtask-pgtask-1  | INFO: Set default schema name to public
+pgtask-pgtask-1  | Feb 10, 2023 4:27:38 PM liquibase.changelog
+pgtask-pgtask-1  | INFO: Reading from public.databasechangelog
+pgtask-pgtask-1  | 16:27:38.896 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 1625ms. Server Running: http://926d82768160:8080
+pgtask-pgtask-1  | 16:27:39.790 [main] INFO  ccb.pgames.services.QuestionService - Cleared questions from DB: 20
+pgtask-pgtask-1  | 16:27:39.833 [main] INFO  ccb.pgames.services.QuestionService - Fetched and persisted questions from DB: 20
+                
 ```
 Verify that the container is up and running by:
 ```shell
@@ -17,7 +56,7 @@ CONTAINER ID   IMAGE                  COMMAND                  CREATED        ST
 6d3f8bc5dd41   postgres:14.1-alpine   "docker-entrypoint.s…"   30 hours ago   Up 31 seconds   0.0.0.0:18543->5432/tcp                             pgtask-db-1
 
 ```
-### Running
+### Compiling and Running
 To compile and start the service, use:
 ```shell
 ./gradlew run 
@@ -42,7 +81,7 @@ INFO: Reading from public.databasechangelog
 
 On every start it will fetch 20 questions from StackExchange and persist them in the database.
 
-## Sample of Usage
+## Samples of REST Api usage
 For the `/questions` endpoint:
 - To get all the questions in the DB
 ```shell
@@ -68,7 +107,7 @@ For the `/questions` endpoint:
 ```
 - To get only one question by its ID:
 ```shell
- % curl -q 'http://localhost:8080/questions/742' | jq  
+ % curl -q 'http://localhost:8080/questions/742'
 {
   "id": 742,
   "title": "WKWebView: how to display a big HTML5 canvas?",
@@ -103,7 +142,7 @@ For the `/questions` endpoint:
 - To search for questions that have specific tags, use the query string variable `tags` with all the tag values joined 
 by comma:
 ```shell
-% curl  'http://localhost:8080/questions?tags=angular,python' | jq
+% curl  'http://localhost:8080/questions?tags=angular,python'
 [
   {
     "id": 761,
@@ -151,6 +190,7 @@ by comma:
     "user_id": 4183877
   }
 ]
+```
 
 ## Packaging and deployment
 To build a JAR file for deployment:
