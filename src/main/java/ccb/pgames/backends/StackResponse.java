@@ -1,16 +1,18 @@
-package ccb.pgames.model;
+package ccb.pgames.backends;
+
+import ccb.pgames.model.Question;
 
 import java.util.List;
 
-public class FeaturedResponse {
-    private List<Question> items;
+public class StackResponse<T> {
+    private List<T> items;
     private boolean has_more;
 
-    public List<Question> getItems() {
+    public List<T> getItems() {
         return items;
     }
 
-    public void setItems(List<Question> items) {
+    public void setItems(List<T> items) {
         this.items = items;
     }
 
