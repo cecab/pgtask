@@ -4,7 +4,7 @@ import ccb.pgames.backends.models.Question;
 import ccb.pgames.backends.models.User;
 import io.micronaut.http.client.annotation.Client;
 
-@Client("https://api.stackexchange.com/2.3")
+@Client(id="stackexchange")
 public interface StackOverFlowClient extends StackOverFlow {
     @Override
     StackResponse<Question> latestQuestions(int page, int pagesize, String sort, String order, String site);

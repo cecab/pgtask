@@ -1,6 +1,10 @@
 micronaut:
   application:
     name: pgtask
+  http:
+    services:
+      stackexchange:
+        url: 'https://api.stackexchange.com/2.3'
   caches:
     user-cache:
       expire-after-write: P1D
