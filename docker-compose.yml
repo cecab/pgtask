@@ -5,12 +5,17 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    ports:
+      - '18543:5432'
     volumes:
       - db-pg:/var/lib/postgresql/data
   pgtask:
     build: .
     depends_on:
       - db
+    environment:
+      - DBHOST = db
+      - DBPORT = 5432
     image: pgtask:latest
     ports:
       - '8080:8080'
