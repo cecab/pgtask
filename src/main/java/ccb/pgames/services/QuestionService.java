@@ -1,6 +1,6 @@
 package ccb.pgames.services;
 
-import ccb.pgames.backends.StackOverFlowClient;
+import ccb.pgames.backends.StackOverFlow;
 import ccb.pgames.dao.QuestionDao;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class QuestionService {
     private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
-    private final StackOverFlowClient fetcher;
+    private final StackOverFlow fetcher;
     Jdbi jdbi;
 
 
-    public QuestionService(StackOverFlowClient fetcher, Jdbi jdbi) {
+    public QuestionService(StackOverFlow fetcher, Jdbi jdbi) {
         this.jdbi = jdbi;
         this.fetcher = fetcher;
     }
