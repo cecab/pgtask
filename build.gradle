@@ -47,7 +47,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("pgtask.*")
+        annotations("pgtask.*","ccb.pgames.*")
     }
 }
 

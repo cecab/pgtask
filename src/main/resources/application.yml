@@ -14,7 +14,7 @@ netty:
       max-order: 3
 datasources:
   default:
-    url: jdbc:postgresql://${DBHOST}:${DBPORT}/pgdb
+    url: jdbc:postgresql://${DBHOST:`localhost`}:${DBPORT:18543}/pgdb
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
