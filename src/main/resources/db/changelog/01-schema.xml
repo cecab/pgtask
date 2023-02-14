@@ -9,13 +9,13 @@
         <sql>
             create table question(
             id SERIAL PRIMARY KEY,
-            title text,
+            title text NOT NULL,
             tags text[],
-            is_answered bool,
+            is_answered bool NOT NULL,
             view_count int,
             answer_count int,
-            creation_date bigint,
-            user_id int
+            creation_date bigint NOT NULL,
+            user_id int NOT NULL
             );
         </sql>
     </changeSet>
