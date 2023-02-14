@@ -10,7 +10,6 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.runtime.server.EmbeddedServer;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
