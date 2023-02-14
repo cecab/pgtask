@@ -1,6 +1,7 @@
 package ccb.pgames.backends.models;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Question {
     private String title;
@@ -64,15 +65,28 @@ public class Question {
         return creation_date;
     }
 
-    public int getUser_id() {
-        return this.owner.getUser_id();
+    public Integer getUser_id() {
+        return this.owner != null ? this.owner.getUser_id() : null;
     }
 
     public void setCreation_date(long creation_date) {
         this.creation_date = creation_date;
     }
 
-    static class Owner {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return view_count == question.view_count && answer_count == question.answer_count && creation_date == question.creation_date && Objects.equals(title, question.title) && Objects.equals(tags, question.tags) && Objects.equals(is_answered, question.is_answered) && Objects.equals(owner, question.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, tags, is_answered, view_count, answer_count, creation_date, owner);
+    }
+
+    public static class Owner {
         int user_id;
 
         public int getUser_id() {
@@ -81,6 +95,19 @@ public class Question {
 
         public void setUser_id(int user_id) {
             this.user_id = user_id;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Owner owner = (Owner) o;
+            return user_id == owner.user_id;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(user_id);
         }
     }
 }
