@@ -14,8 +14,8 @@ services:
     depends_on:
       - db
     environment:
-      - DBHOST = db
-      - DBPORT = 5432
+      - DBHOST=db
+      - DBPORT=5432
     image: pgtask:latest
     ports:
       - '8080:8080'
