@@ -10,6 +10,7 @@ import org.jdbi.v3.postgres.PostgresPlugin;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 
 @Named("default")
 public class JdbiCustomizer implements io.micronaut.configuration.jdbi.JdbiCustomizer {
@@ -22,13 +23,12 @@ public class JdbiCustomizer implements io.micronaut.configuration.jdbi.JdbiCusto
 class QuestionMapper implements RowMapper<QuestionDB> {
     @Override
     public QuestionDB map(ResultSet rs, StatementContext ctx) throws SQLException {
-        String[] tags = (String[]) rs.getArray("tags").getArray();
-
-
+        List<String> tagList = rs.getArray("tags") != null ?
+                Arrays.asList((String[]) rs.getArray("tags").getArray()) : null;
         QuestionDB q = new QuestionDB();
         q.setId(rs.getInt("id"));
         q.setTitle(rs.getString("title"));
-        q.setTags(Arrays.asList(tags));
+        q.setTags(tagList);
         q.setAnswered(rs.getBoolean("is_answered"));
         q.setViewCount(rs.getInt("view_count"));
         q.setAnswerCount(rs.getInt("answer_count"));
