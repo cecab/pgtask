@@ -34,14 +34,6 @@ class QuestionControllerTest {
     @Client("/")
     HttpClient client;
 
-    @Inject
-    Jdbi jdbi;
-
-    @BeforeEach
-    void setUp() {
-        jdbi.useHandle(handler -> handler.execute("DELETE FROM question"));
-    }
-
     @Test
     void testsQuestionsAreEmpty() throws JsonProcessingException {
         String questions = client.toBlocking().retrieve("/questions");

@@ -8,7 +8,7 @@ import io.micronaut.http.annotation.PathVariable;
 
 import java.util.Optional;
 
-@Controller("/users")
+@Controller("userDetails")
 public class UserController {
     private final UserService userService;
 
