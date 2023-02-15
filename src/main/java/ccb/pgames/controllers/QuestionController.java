@@ -20,7 +20,7 @@ public class QuestionController {
 
 
     @Get
-    public List<QuestionAPI> getByTag(@QueryValue(value = "tags", defaultValue = "") String strTags) {
+    public List<QuestionAPI> getAll(@QueryValue(value = "tags", defaultValue = "") String strTags) {
         return storageService.getByTags(strTags);
     }
 

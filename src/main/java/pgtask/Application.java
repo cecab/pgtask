@@ -1,24 +1,23 @@
 package pgtask;
 
 import ccb.pgames.services.QuestionService;
+import io.micronaut.context.event.StartupEvent;
 import io.micronaut.runtime.Micronaut;
+import io.micronaut.runtime.event.annotation.EventListener;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
+import jakarta.inject.Singleton;
 
+@Singleton
 public class Application {
-
-
     @Inject
-    @Named("fetcher")
     private QuestionService questionService;
 
     public static void main(String[] args) {
-        var applicationContext = Micronaut.build(args)
-                .eagerInitSingletons(true)
-                .mainClass(Application.class)
-                .args(args).start();
-        //TODO: get() is tolerated here because we trust in the previous wiring of beans
-        var fetcher = applicationContext.findBean(QuestionService.class).get();
-        fetcher.fetch();
+        Micronaut.run(Application.class, args);
+    }
+
+    @EventListener
+    public void onStart(StartupEvent event) {
+        questionService.fetch();
     }
 }
