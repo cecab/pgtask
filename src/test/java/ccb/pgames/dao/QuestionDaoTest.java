@@ -1,36 +1,29 @@
 package ccb.pgames.dao;
 
+import ccb.pgames.backends.StackOverFlow;
+import ccb.pgames.backends.StackResponse;
 import ccb.pgames.backends.models.Question;
+import ccb.pgames.backends.models.User;
 import ccb.pgames.dao.models.QuestionDB;
-import io.micronaut.context.ApplicationContext;
-import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.context.annotation.Property;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import jakarta.inject.Inject;
 import org.jdbi.v3.core.Jdbi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Testcontainers
+@MicronautTest(transactional = false)
+@Property(name = "spec.name", value = "QuestionDaoTest")
 class QuestionDaoTest {
-    @Container
-    public static GenericContainer POSTGRESQL_CONTAINER;
-
-    static {
-        POSTGRESQL_CONTAINER = new GenericContainer<>("postgres").withExposedPorts(5432).withEnv(Map.of(
-                "POSTGRES_USER", "pgtask", "POSTGRES_PASSWORD", "pgtask-password"));
-        POSTGRESQL_CONTAINER.start();
-    }
-
-    static EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer.class,
-            Map.of("datasources.default" + ".url",
-                    "jdbc:postgresql://" + POSTGRESQL_CONTAINER.getHost() + ":" + POSTGRESQL_CONTAINER.getFirstMappedPort() + "/postgres", "datasources.default.username", "pgtask", "datasources.default.password", "pgtask-password"));
-    static Jdbi jdbi = embeddedServer.getApplicationContext().findBean(Jdbi.class).get();
+    @Inject
+    Jdbi jdbi;
 
     @BeforeEach
     void setUp() {
@@ -55,7 +48,7 @@ class QuestionDaoTest {
         List<QuestionDB> questionDBS = jdbi.withExtension(QuestionDao.class, QuestionDao::findAll);
 
         assertEquals(1, questionDBS.size());
-        assertEquals(1, questionDBS.get(0).getId());
+        assertTrue(questionDBS.get(0).getId() > 0);
         assertEquals("Test question", questionDBS.get(0).getTitle());
         assertEquals(false, questionDBS.get(0).getAnswered());
         assertEquals(1676374978, questionDBS.get(0).getCreation_date());
@@ -131,5 +124,22 @@ class QuestionDaoTest {
         assertEquals(2, questionsTag1.size());
         assertEquals(1, questionsTag3.size());
         assertEquals(0, questionsTag4.size());
+    }
+
+
+    @Requires(property = "spec.name", value = "QuestionDaoTest")
+    @Controller
+    static class MockServer implements StackOverFlow {
+        @Override
+        public StackResponse<Question> latestQuestions(int page, int pagesize, String sort, String order, String site) {
+            var resp = new StackResponse<Question>();
+            resp.setItems(List.of());
+            return resp;
+        }
+
+        @Override
+        public StackResponse<User> userDetails(int userId, String order, String sort, String site) {
+            return null;
+        }
     }
 }
