@@ -6,6 +6,7 @@ import ccb.pgames.backends.models.Question;
 import ccb.pgames.backends.models.User;
 import ccb.pgames.controllers.models.UserAPI;
 import ccb.pgames.dao.QuestionDao;
+import ccb.pgames.helpers.TestHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -48,7 +49,7 @@ class QuestionControllerOperationsTest {
     @Test
     void testsGetAllQuestions() throws JsonProcessingException {
         String questions = client.toBlocking().retrieve("/questions");
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = TestHelper.getObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(questions);
 
         Assertions.assertTrue(jsonNode.isArray());
@@ -59,7 +60,7 @@ class QuestionControllerOperationsTest {
     void testsGetQuestionsByTags() throws JsonProcessingException {
         var request = HttpRequest.GET("/questions?tags=xyz,javascript");
         String questions = client.toBlocking().retrieve(request);
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = TestHelper.getObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(questions);
 
         Assertions.assertTrue(jsonNode.isArray());
@@ -75,7 +76,7 @@ class QuestionControllerOperationsTest {
     @Test
     void checkUserDetails() throws JsonProcessingException {
         var response = client.toBlocking().retrieve("/userDetails/10");
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = TestHelper.getObjectMapper();
         var user = objectMapper.readValue(response, UserAPI.class);
 
         Assertions.assertEquals("John Smith", user.getDisplay_name());
@@ -103,7 +104,7 @@ class QuestionControllerOperationsTest {
         @Override
         public StackResponse<Question> latestQuestions(int page, int pagesize, String sort, String order, String site) {
             Optional<InputStream> resourceAsStream = resourceLoader.getResourceAsStream("questions-operations.json");
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = TestHelper.getObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
             try {

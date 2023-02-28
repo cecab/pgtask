@@ -2,6 +2,7 @@ package ccb.pgames.backends;
 
 import ccb.pgames.backends.models.Question;
 import ccb.pgames.backends.models.User;
+import ccb.pgames.helpers.TestHelper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +49,7 @@ class StackOverFlowTest {
         @Override
         public StackResponse<Question> latestQuestions(int page, int pagesize, String sort, String order, String site) {
             Optional<InputStream> resourceAsStream = resourceLoader.getResourceAsStream("questions.json");
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = TestHelper.getObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
             try {

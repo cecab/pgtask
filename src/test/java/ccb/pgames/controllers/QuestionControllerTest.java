@@ -4,6 +4,7 @@ import ccb.pgames.backends.StackOverFlow;
 import ccb.pgames.backends.StackResponse;
 import ccb.pgames.backends.models.Question;
 import ccb.pgames.backends.models.User;
+import ccb.pgames.helpers.TestHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +38,7 @@ class QuestionControllerTest {
     @Test
     void testsQuestionsAreEmpty() throws JsonProcessingException {
         String questions = client.toBlocking().retrieve("/questions");
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = TestHelper.getObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(questions);
 
         Assertions.assertTrue(jsonNode.isArray());
