@@ -117,9 +117,9 @@ class QuestionDaoTest {
         question2.setTags(List.of("tag1", "tag3"));
         jdbi.withExtension(QuestionDao.class, dao -> dao.insert(question2));
 
-        List<QuestionDB> questionsTag1 = jdbi.withExtension(QuestionDao.class, dao -> dao.findByTags(List.of("tag1")));
-        List<QuestionDB> questionsTag3 = jdbi.withExtension(QuestionDao.class, dao -> dao.findByTags(List.of("tag3")));
-        List<QuestionDB> questionsTag4 = jdbi.withExtension(QuestionDao.class, dao -> dao.findByTags(List.of("tag4")));
+        List<QuestionDB> questionsTag1 = jdbi.withExtension(QuestionDao.class, dao -> dao.findByMultipleTags(List.of("tag1")));
+        List<QuestionDB> questionsTag3 = jdbi.withExtension(QuestionDao.class, dao -> dao.findByMultipleTags(List.of("tag3")));
+        List<QuestionDB> questionsTag4 = jdbi.withExtension(QuestionDao.class, dao -> dao.findByMultipleTags(List.of("tag4")));
 
         assertEquals(2, questionsTag1.size());
         assertEquals(1, questionsTag3.size());

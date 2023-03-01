@@ -32,7 +32,7 @@ public class StorageService {
             if (tags.size() == 1 && tags.get(0).isEmpty()) {
                 return dao.findAll();
             }
-            return dao.findByTags(tags);
+            return dao.findByMultipleTags(tags);
         }));
     }
 
