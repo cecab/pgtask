@@ -19,4 +19,9 @@
             );
         </sql>
     </changeSet>
+    <changeSet id="02" author="cesar">
+        <sql>
+            CREATE INDEX question_tags_idx ON question(tags);
+        </sql>
+    </changeSet>
 </databaseChangeLog>
